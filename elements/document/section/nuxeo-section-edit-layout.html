@@ -24,15 +24,7 @@ limitations under the License.
   <template>
     <style include="nuxeo-styles"></style>
 
-    <nuxeo-input
-      role="widget"
-      label="[[i18n('label.ui.schema.dc.title')]]"
-      name="title"
-      value="{{document.properties.dc:title}}"
-      autofocus
-      required
-    >
-    </nuxeo-input>
+    <nuxeo-dc-title-input role="widget" document="{{document}}" autofocus required> </nuxeo-dc-title-input>
 
     <nuxeo-textarea
       role="widget"
