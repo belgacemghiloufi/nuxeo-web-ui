@@ -23,10 +23,7 @@ limitations under the License.
 <dom-module id="nuxeo-collections-metadata-layout">
   <template>
     <style include="nuxeo-styles"></style>
-    <div role="widget">
-      <label>[[i18n('label.ui.schema.dc.title')]]</label>
-      <div name="title">[[document.properties.dc:title]]</div>
-    </div>
+    <nuxeo-dc-title-label role="widget" document="[[document]]"> </nuxeo-dc-title-label>
 
     <div role="widget" hidden$="[[!document.properties.dc:description]]">
       <label>[[i18n('label.ui.schema.dc.description')]]</label>
