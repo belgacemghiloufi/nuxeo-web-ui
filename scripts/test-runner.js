@@ -15,6 +15,11 @@ function runFunctionalTests(project, dir) {
   }
   console.info(`Starting Functional Tests for "${project}" on "${dir}" location.`);
   const ftestArgs = [...process.argv, '--cucumberReport', path.join(FTEST, 'target/cucumber-reports')];
+  console.log({
+    command: 'nuxeo-web-ui-ftest',
+    args: ftestArgs,
+    options: { cwd: dir, stdio: 'inherit' },
+  });
   const run = spawnSync('nuxeo-web-ui-ftest', ftestArgs, { cwd: dir, stdio: 'inherit' });
   if (run.status !== 0) {
     console.error(`An error was returned by the process running the Functional Tests for "${project}".`);

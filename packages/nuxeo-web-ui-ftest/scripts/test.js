@@ -28,7 +28,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { spawn } = require('child_process');
+const { exec, spawn } = require('child_process');
 
 const wdioBin = require.resolve('webdriverio/bin/wdio');
 const argv = require('minimist')(process.argv.slice(2));
@@ -37,6 +37,8 @@ const defaultDef = './features/step_definitions';
 
 const args = [argv.wdioConfig ? argv.wdioConfig : path.join(__dirname, '../wdio.conf.js')];
 args.push(`--specs=${argv.features || './features/*.feature'}`);
+
+console.log(argv);
 
 if (argv.url) {
   process.env.NUXEO_WEB_UI_URL = argv.url;
@@ -94,6 +96,24 @@ if (argv.bail) {
 process.env.BROWSER = argv.browser || process.env.BROWSER || 'chrome';
 
 process.env.FORCE_COLOR = true;
+
+exec('google-chrome --version', (error, stdout, stderr) => {
+  if (error) {
+    console.log(`error: ${error.message}`);
+    return;
+  }
+  if (stderr) {
+    console.log(`stderr: ${stderr}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+});
+console.log(process.env);
+console.log({
+  command: 'node',
+  args: [wdioBin, ...args],
+  options: { env: process.env, stdio: ['inherit', 'pipe', 'pipe'] },
+});
 
 const wdio = spawn('node', [wdioBin, ...args], { env: process.env, stdio: ['inherit', 'pipe', 'pipe'] });
 
